@@ -6,7 +6,7 @@
     <title>Error Page</title>
 </head>
 <body>
-    <h1>konnnitiha</h1>
+    <h1>testtest</h1>
     <p>ユーザ名またはパスワードが正しくありません。再試行してください。</p>
     
     <!-- ログイン画面に戻るボタン -->
