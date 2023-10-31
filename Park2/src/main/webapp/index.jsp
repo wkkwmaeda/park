@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ログイン</title>
+    <title>ログインhatake</title>
     <style>
         body {
             text-align: center;
@@ -52,7 +52,7 @@
     </style>
 </head>
 <body>
-    <h1>駐車場予約システムログイン</h1>
+    <h1>駐車場予約システム</h1>
     <form action="LoginServlet" method="POST">
         <label for="userID">従業員ID:</label>
         <input type="text" name="userID" id="userID" required />
