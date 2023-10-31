@@ -52,7 +52,7 @@
     </style>
 </head>
 <body>
-    <h1>駐車場予約システム琳太郎さぼるなよ</h1>
+    <h1>駐車場予約システムtinko</h1>
     <form action="LoginServlet" method="POST">
         <label for="userID">従業員ID:</label>
         <input type="text" name="userID" id="userID" required />
