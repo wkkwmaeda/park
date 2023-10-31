@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ログイン畠山琳太郎８７８７</title>
+    <title>ログイン</title>
     <style>
         body {
             text-align: center;
