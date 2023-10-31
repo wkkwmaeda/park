@@ -18,7 +18,7 @@ public class EditParkingStatusServlet extends HttpServlet {
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // URL パラメータから駐車場番号を取得
+        // URL パラメータから駐車場番号を取得するぜよ
         int parkingNumber = Integer.parseInt(request.getParameter("parkingNumber"));
 
         // 駐車場番号から現在の状態をデータベースから取得
