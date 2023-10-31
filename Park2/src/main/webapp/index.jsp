@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ログインhatake</title>
+    <title>ログインペテン師maeda</title>
     <style>
         body {
             text-align: center;
