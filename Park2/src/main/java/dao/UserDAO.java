@@ -7,11 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO {
-
+	
+	//ê⁄ë±
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     private static final String JDBC_URL = "jdbc:mysql://localhost:65534/parking?useSSL=false&characterEncoding=UTF-8&serverTimezone=JST";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "pass"; 
+    private static final String DB_PASS = "pass";
 
     static {
         try {
