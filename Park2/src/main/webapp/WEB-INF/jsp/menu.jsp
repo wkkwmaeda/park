@@ -6,7 +6,7 @@
 <style>
     .button-container {
         display: flex;
-        flex-direction: column; /* ボタンを垂直に配置 */
+        flex-direction: column; /* ボタンを垂直に配置  */
         align-items: center; /* ボタンを中央に配置 */
         margin-top: 20px; /* 適宜調整 */
     }

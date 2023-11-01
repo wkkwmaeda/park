@@ -42,7 +42,7 @@
             background-color: #0074cc;
             color: white;
             padding: 10px 20px;
-            margin: 10px auto; /* 中央に配置 */
+            margin: 10px auto; /* 中央に配置  */
             font-size: 18px;
             border: none;
             border-radius: 5px;
