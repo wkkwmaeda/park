@@ -42,12 +42,12 @@
             background-color: #0074cc;
             color: white;
             padding: 10px 20px;
-            margin: 10px;
+            margin: 10px auto; /* 中央に配置 */
             font-size: 18px;
             border: none;
             border-radius: 5px;
-            
             cursor: pointer;
+            display: block; /* ボタンをブロック要素に変更 */
         }
     </style>
 </head>
