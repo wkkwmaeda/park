@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ログインまなと</title>
+    <title>ログインrinta</title>
     <style>
         body {
             text-align: center;
