@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,9 +20,9 @@ public class LoginServlet extends HttpServlet {
 
         // ここでデータベースからユーザー情報を検索し、照合します。
         if (UserDAO.authenticateUser(userID, password)) {
-            // ログイン成功
-            // セッションにユーザー情報を格納するなどの処理を追加
-            response.sendRedirect("ParkingStatusServlet");
+        	//ログイン結果画面にフォワード
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/menu.jsp");
+    		dispatcher.forward(request, response);
         } else {
             // ログイン失敗
             request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
