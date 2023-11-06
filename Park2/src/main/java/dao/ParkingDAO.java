@@ -5,58 +5,37 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Reservation;
 
 public class ParkingDAO {
-    // データベースへの接続情報
-    private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://localhost:65534/parking?useSSL=false&characterEncoding=UTF-8&serverTimezone=JST";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "pass";
+    // ... (既存のコード)
 
-    static {
-        try {
-            Class.forName(DRIVER_NAME);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("JDBCドライバーの読み込みに失敗しました。", e);
-        }
-    }
+    // reservationテーブルから全情報を取得するメソッド
+    public List<Reservation> getAllReservations() {
+        List<Reservation> reservations = new ArrayList<>();
+        String query = "SELECT * FROM reservation";
 
-    // ユーザーの認証を行うメソッド
-    public static String[] authenticateUser(String customerID, String carNumber) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        String[] userInfo = new String[2]; // ユーザー情報を保持する配列
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-        try {
-            conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+            while (resultSet.next()) {
+                // テーブルから取得した情報をReservationオブジェクトにマッピングしてリストに追加
+                int id = resultSet.getInt("id");
+                // 他のカラムの取得も同様に行う
 
-            // データベースに対するクエリ作成
-            String sql = "SELECT cuid, carnum FROM customer WHERE cuid = ? AND carnum = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, customerID);
-            stmt.setString(2, carNumber);
-
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                // ユーザーが見つかった場合はユーザー情報を配列に格納して返す
-                userInfo[0] = rs.getString("cuid"); // customerIdを取得してuserInfo[0]に格納
-                userInfo[1] = rs.getString("carnum"); // carNumberを取得してuserInfo[1]に格納
-                return userInfo;
+                // Reservationオブジェクトを生成してリストに追加
+                Reservation reservation = new Reservation(id /*, 他のカラムの値 */);
+                reservations.add(reservation);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // エラーを出力
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace(); // エラーを出力
-            }
+            // エラーハンドリング
+            e.printStackTrace(); // エラーの詳細を出力（実際のシステムでは適切なエラーハンドリングを行うこと）
         }
 
-        return null; // ユーザーが見つからなかった場合はnullを返す
+        return reservations;
     }
 }

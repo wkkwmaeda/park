@@ -24,6 +24,9 @@
         <form action="ParkingStatusServlet" method="post">
             <input type="submit" name="button2" value="駐車場一覧">
         </form>
+        <form action="index.jsp" method="post">
+            <input type="submit" name="button3" value="ログアウト">
+        </form>
     </div>
 </body>
 </html>
