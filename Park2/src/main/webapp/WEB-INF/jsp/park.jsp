@@ -3,16 +3,39 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.ParkingSpace" %>
 
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Parking Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
     <h1>Parking Reservations</h1>
-    <table border="1">
+    <table>
         <tr>
             <th>ID</th>
             <th>Car Number</th>
@@ -31,3 +54,4 @@
         </c:forEach>
     </table>
 </body>
+</html>
