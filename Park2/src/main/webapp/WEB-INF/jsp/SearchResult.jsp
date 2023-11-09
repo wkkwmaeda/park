@@ -1,13 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="model.ParkingSpace" %>
+<%@ page import="model.Reservation" %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Parking Status</title>
+    <title>Parking Search Results</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,15 +34,7 @@
     </style>
 </head>
 <body>
-    <h1>Parking Reservations</h1>
-
-    <!-- 検索フォーム -->
-    <form action="SearchByCarNumServlet" method="get">
-        Car Number: <input type="text" name="carnum">
-        Park Date: <input type="text" name="parkdate">
-        Customer Name: <input type="text" name="cuname">
-        <input type="submit" value="Search">
-    </form>
+    <h1>Parking Search Results</h1>
 
     <table>
         <!-- 表ヘッダ -->
@@ -56,7 +48,7 @@
         </tr>
 
         <!-- 検索結果表示 -->
-        <c:forEach var="reservation" items="${reservations}">
+        <c:forEach var="reservation" items="${searchResults}">
             <tr>
                 <td>${reservation.reserv_id}</td>
                 <td>${reservation.carnum}</td>
@@ -67,6 +59,8 @@
             </tr>
         </c:forEach>
     </table>
+    <form action="ParkingStatusServlet" method="post">
+            <input type="submit" name="button1" value="一覧へ戻る">
+    </form>
 </body>
-
 </html>

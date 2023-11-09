@@ -71,7 +71,34 @@ public class ParkingDAO {
                 e.printStackTrace(); // 適切なエラーハンドリングが必要です
             }
             return cuname;
+        } 
+        
+        
+        public List<Reservation> searchByCarNum(String carnum) {
+            List<Reservation> reservations = new ArrayList<>();
+            try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+                String query = "SELECT * FROM reservation WHERE carnum = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setString(1, carnum);
+
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            int reserv_id = resultSet.getInt("reserv_id");
+                            String carNumber = resultSet.getString("carnum");
+                            int customerId = resultSet.getInt("cuid");
+                            String parkDate = resultSet.getString("parkdate");
+                            String customerName = getCustomerNameById(customerId, connection); // 顧客名を取得
+                            Reservation reservation = new Reservation(reserv_id, carNumber, customerId, customerName, parkDate);
+                            reservations.add(reservation);
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // 適切なエラーハンドリングを行ってください
+            }
+            return reservations;
         }
+
     }
 
 
