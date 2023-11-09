@@ -79,10 +79,10 @@
         <h1>駐車場予約システム</h1>
     </div>
     <form action="LoginServlet" method="POST">
-        <label for="userID">従業員ID：</label>
+        <label for="userID">従業員ID</label>
         <input type="text" name="userID" id="userID" required />
         <br />
-        <label for="password">パスワード：</label>
+        <label for="password">パスワード</label>
         <input type="password" name="password" id="password" required />
         <br />
         <input type="submit" value="ログイン" />
