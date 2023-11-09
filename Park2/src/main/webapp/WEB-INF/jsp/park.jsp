@@ -40,6 +40,7 @@
             <th>ID</th>
             <th>Car Number</th>
             <th>Customer ID</th>
+            <th>name</th>
             <th>Parking Date</th>
             <!-- Add other table headers for additional fields if present -->
         </tr>
@@ -48,6 +49,7 @@
                 <td>${reservation.reserv_id}</td>
                 <td>${reservation.carnum}</td>
                 <td>${reservation.cuid}</td>
+                <td>${reservation.getCuname()}</td>
                 <td>${reservation.parkdate}</td>
                 <!-- Add additional table data for other fields if present -->
             </tr>

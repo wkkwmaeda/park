@@ -26,43 +26,55 @@ public class ParkingDAO {
     }
 
     // reservationテーブルから全情報を取得するメソッド
-    public List<Reservation> getAllReservations() {
-        List<Reservation> reservations = new ArrayList<>();
-        String query = "SELECT * FROM reservation";
 
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        // ...（他の既存のコードはそのまま）
+        
+        public List<Reservation> getAllReservations() {
+            List<Reservation> reservations = new ArrayList<>();
+            String query = "SELECT * FROM reservation";
 
-            while (resultSet.next()) {
-                int reserv_id = resultSet.getInt("reserv_id");
-                String carnum = resultSet.getString("carnum");
-                int cuid = resultSet.getInt("cuid");
-                String parkdate = resultSet.getString("parkdate");
+            try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+                 PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                // 顧客名を取得するクエリを実行
-                String customerQuery = "SELECT cuname FROM customer WHERE cuid = ?";
-                try (PreparedStatement customerStatement = connection.prepareStatement(customerQuery)) {
-                    customerStatement.setInt(1, cuid);
-                    ResultSet customerResult = customerStatement.executeQuery();
+                while (resultSet.next()) {
+                    int reserv_id = resultSet.getInt("reserv_id");
+                    String carnum = resultSet.getString("carnum");
+                    int cuid = resultSet.getInt("cuid");
+                    String parkdate = resultSet.getString("parkdate");
 
-                    if (customerResult.next()) {
-                        String cuname = customerResult.getString("cuname");
+                    String cuname = getCustomerNameById(cuid, connection); // 顧客名を取得
 
-                        // Reservationオブジェクトを生成してリストに追加
-                        Reservation reservation = new Reservation(reserv_id, carnum, cuid, cuname, parkdate);
-                        reservation.setCustomerName(cuname); // 顧客名を設定
-                        reservations.add(reservation);
-                    }
+                    // 予約オブジェクトを生成し、顧客名を設定
+                    Reservation reservation = new Reservation(reserv_id, carnum, cuid, cuname, parkdate);
+                    reservations.add(reservation);
                 }
+            } catch (SQLException e) {
+                e.printStackTrace(); // 適切なエラーハンドリングが必要です
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); // エラーハンドリング
+
+            return reservations;
         }
 
-        return reservations;
+        // 顧客IDに基づいて顧客名を取得するメソッド
+        private String getCustomerNameById(int cuid, Connection connection) {
+            String cuname = "";
+            String customerQuery = "SELECT cuname FROM customer WHERE cuid = ?";
+            try (PreparedStatement customerStatement = connection.prepareStatement(customerQuery)) {
+                customerStatement.setInt(1, cuid);
+                ResultSet customerResult = customerStatement.executeQuery();
+
+                if (customerResult.next()) {
+                    cuname = customerResult.getString("cuname");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // 適切なエラーハンドリングが必要です
+            }
+            return cuname;
+        }
     }
 
 
+
       
-}
+
