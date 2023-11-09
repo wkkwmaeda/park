@@ -35,22 +35,34 @@ public class ParkingDAO {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
-                // テーブルから取得した情報をReservationオブジェクトにマッピングしてリストに追加
                 int reserv_id = resultSet.getInt("reserv_id");
                 String carnum = resultSet.getString("carnum");
                 int cuid = resultSet.getInt("cuid");
                 String parkdate = resultSet.getString("parkdate");
-                // 他のカラムの取得も同様に行う
 
-                // Reservationオブジェクトを生成してリストに追加
-                Reservation reservation = new Reservation(reserv_id, carnum, cuid, parkdate);
-                reservations.add(reservation);
+                // 顧客名を取得するクエリを実行
+                String customerQuery = "SELECT cuname FROM customer WHERE cuid = ?";
+                try (PreparedStatement customerStatement = connection.prepareStatement(customerQuery)) {
+                    customerStatement.setInt(1, cuid);
+                    ResultSet customerResult = customerStatement.executeQuery();
+
+                    if (customerResult.next()) {
+                        String cuname = customerResult.getString("cuname");
+
+                        // Reservationオブジェクトを生成してリストに追加
+                        Reservation reservation = new Reservation(reserv_id, carnum, cuid, cuname, parkdate);
+                        reservation.setCustomerName(cuname); // 顧客名を設定
+                        reservations.add(reservation);
+                    }
+                }
             }
         } catch (SQLException e) {
-            // エラーハンドリング
-            e.printStackTrace(); // エラーの詳細を出力（実際のシステムでは適切なエラーハンドリングを行うこと）
+            e.printStackTrace(); // エラーハンドリング
         }
 
         return reservations;
     }
+
+
+      
 }
