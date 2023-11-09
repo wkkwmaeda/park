@@ -71,6 +71,10 @@
             </tr>
         </c:forEach>
     </table>
+    
+    <form action="LoginServlet" method="post">
+            <input type="submit" name="button1" value="一覧へ戻る">
+    </form>
 </body>
 
 </html>
