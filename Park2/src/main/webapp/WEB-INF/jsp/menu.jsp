@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>メニューー</title>
+    <title>メニュー</title>
     <style>
         body {
             font-family: Arial, sans-serif;
