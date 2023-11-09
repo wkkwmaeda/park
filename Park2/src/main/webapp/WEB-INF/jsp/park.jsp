@@ -39,10 +39,14 @@
     <!-- 検索フォーム -->
     <form action="SearchByCarNumServlet" method="get">
         Car Number: <input type="text" name="carnum">
-        Park Date: <input type="text" name="parkdate">
-        Customer Name: <input type="text" name="cuname">
-        <input type="submit" value="Search">
     </form>
+    <form action="SearchByParkdateServlet" method="get">
+        Park Date: <input type="text" name="parkdate">
+    </form> 
+    <form action="SearchByCunameServlet" method="get">
+        Customer Name: <input type="text" name="cuname">
+    </form>
+    <input type="submit" value="Search">
 
     <table>
         <!-- 表ヘッダ -->
