@@ -1,20 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
-<title>メニュー</title>
-<style>
-    .button-container {
-        display: flex;
-        flex-direction: column; /* ボタンを垂直に配置  */
-        align-items: center; /* ボタンを中央に配置 */
-        margin-top: 20px; /* 適宜調整 */
-    }
-    .button-container input[type="submit"] {
-        padding: 15px 30px; /* ボタンのパディングを調整して大きくする */
-        margin: 10px 0; /* ボタン間の間隔を調整 */
-    }
-</style>
+    <meta charset="UTF-8">
+    <title>メニュー</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .button-container form {
+            margin-bottom: 15px;
+        }
+        .button-container input[type="submit"] {
+            padding: 12px 25px;
+            margin: 8px 0;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button-container input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <div class="button-container">
