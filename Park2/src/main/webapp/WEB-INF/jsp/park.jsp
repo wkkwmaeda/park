@@ -8,6 +8,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Parking Status</title>
+    <script>
+        function redirectToMenu() {
+            window.location.href = "menu.jsp"; // メニューページのURL
+        }
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,11 +75,13 @@
                 <!-- 他のフィールドの情報表示（必要に応じて追加） -->
             </tr>
         </c:forEach>
+      
     </table>
     
-    <form action="LoginServlet" method="post">
-            <input type="submit" name="button1" value="一覧へ戻る">
+        <form action="Return" method="post">
+            <input type="submit" name="button1" value="メインメニューへ戻る">
     </form>
+    
 </body>
 
 </html>
