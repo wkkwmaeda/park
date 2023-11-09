@@ -36,14 +36,14 @@ public class ParkingDAO {
 
             while (resultSet.next()) {
                 // テーブルから取得した情報をReservationオブジェクトにマッピングしてリストに追加
-                int id = resultSet.getInt("id");
+                int reserv_id = resultSet.getInt("reserv_id");
                 String carnum = resultSet.getString("carnum");
                 int cuid = resultSet.getInt("cuid");
                 String parkdate = resultSet.getString("parkdate");
                 // 他のカラムの取得も同様に行う
 
                 // Reservationオブジェクトを生成してリストに追加
-                Reservation reservation = new Reservation(id, carnum, cuid, parkdate);
+                Reservation reservation = new Reservation(reserv_id, carnum, cuid, parkdate);
                 reservations.add(reservation);
             }
         } catch (SQLException e) {

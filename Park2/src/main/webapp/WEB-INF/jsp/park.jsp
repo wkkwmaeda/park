@@ -22,7 +22,7 @@
         </tr>
         <c:forEach var="reservation" items="${reservations}">
             <tr>
-                <td>${reservation.id}</td>
+                <td>${reservation.reserv_id}</td>
                 <td>${reservation.carnum}</td>
                 <td>${reservation.cuid}</td>
                 <td>${reservation.parkdate}</td>

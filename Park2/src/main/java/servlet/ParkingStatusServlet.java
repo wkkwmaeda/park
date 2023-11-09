@@ -17,6 +17,8 @@ public class ParkingStatusServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ParkingDAO parkingDAO = new ParkingDAO();
         List<Reservation> reservations = parkingDAO.getAllReservations();
+        
+        System.out.println(reservations);
 
         // Set the retrieved reservations as an attribute in the request
         request.setAttribute("reservations", reservations);
