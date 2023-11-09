@@ -50,12 +50,12 @@ public class Reservation {
     }
     
  // customerNameのgetter（取得用メソッド）
-    public String getCustomerName() {
+    public String getCuname() {
         return cuname;
     }
 
     // customerNameのsetter（設定用メソッド）
-    public void setCustomerName(String cuname) {
+    public void setCuname(String cuname) {
         this.cuname = cuname;
     }
 }
