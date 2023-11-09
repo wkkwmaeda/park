@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import dao.ParkingDAO;
 import model.Reservation;
 
-@WebServlet("/parkingStatus")
+@WebServlet("/ParkingStatusServlet")
 public class ParkingStatusServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ParkingDAO parkingDAO = new ParkingDAO();
         List<Reservation> reservations = parkingDAO.getAllReservations();
 
@@ -22,6 +22,6 @@ public class ParkingStatusServlet extends HttpServlet {
         request.setAttribute("reservations", reservations);
 
         // Forward the data to the JSP page for rendering
-        request.getRequestDispatcher("Park.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/park.jsp").forward(request, response);
     }
 }
