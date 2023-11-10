@@ -14,13 +14,13 @@ import dao.ParkingDAO;
 import model.Reservation;
 
 @WebServlet("/SearchByParkdateServlet")
-public class SearchByParkdateServlet extends HttpServlet {
+public class SearchByNameServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String parkdate = request.getParameter("parkdate");
+        String cuname = request.getParameter("cuname");
 
         ParkingDAO dao = new ParkingDAO();
-        List<Reservation> searchResults = dao.searchByParkdate(parkdate);
+        List<Reservation> searchResults = dao.searchByName(cuname);
 
         request.setAttribute("searchResults", searchResults);
         request.getRequestDispatcher("SearchResult.jsp").forward(request, response);
