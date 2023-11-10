@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.ParkingDAO;
 import model.Reservation;
 
-@WebServlet("/SearchByParkdateServlet")
+@WebServlet("/SearchByNameServlet")
 public class SearchByNameServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
