@@ -102,7 +102,7 @@ public class ParkingDAO {
         public List<Reservation> searchByParkdate(String parkdate) {
             List<Reservation> reservations = new ArrayList<>();
             try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-                String query = "SELECT * FROM reservation WHERE carnum = ?";
+                String query = "SELECT * FROM reservation WHERE parkdate = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, parkdate);
 
@@ -127,7 +127,10 @@ public class ParkingDAO {
         public List<Reservation> searchByName(String cuname) {
             List<Reservation> reservations = new ArrayList<>();
             try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-                String query = "SELECT * FROM reservation WHERE carnum = ?";
+            	String query = "SELECT reservation.*, customer.cuname " +
+                        "FROM reservation " +
+                        "INNER JOIN customer ON reservation.cuid = customer.cuid " +
+                        "WHERE customer.cuname = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, cuname);
 

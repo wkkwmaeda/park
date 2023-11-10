@@ -16,13 +16,13 @@ import model.Reservation;
 @WebServlet("/SearchByParkdateServlet")
 public class SearchByParkdateServlet extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String parkdate = request.getParameter("parkdate");
 
         ParkingDAO dao = new ParkingDAO();
         List<Reservation> searchResults = dao.searchByParkdate(parkdate);
 
         request.setAttribute("searchResults", searchResults);
-        request.getRequestDispatcher("SearchResult.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/SearchResult.jsp").forward(request, response);
     }
 }
