@@ -144,7 +144,7 @@ public class ParkingDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace(); // 適切なエラーハンドリングを行ってください
+			e.printStackTrace();  // 適切なエラーハンドリングを行ってください
 		}
 		return reservations;
 	}
