@@ -48,9 +48,10 @@
     <form action="SearchByParkdateServlet" method="get">
         Park Date: <input type="text" name="parkdate">
     </form> 
-    <form action="SearchByCunameServlet" method="get">
+    <form action="SearchByNameServlet" method="get">
         Customer Name: <input type="text" name="cuname">
     </form>
+    
     <input type="submit" value="Search">
 
     <table>
