@@ -98,6 +98,56 @@ public class ParkingDAO {
             }
             return reservations;
         }
+        
+        public List<Reservation> searchByParkdate(String parkdate) {
+            List<Reservation> reservations = new ArrayList<>();
+            try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+                String query = "SELECT * FROM reservation WHERE carnum = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setString(1, parkdate);
+
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            int reserv_id = resultSet.getInt("reserv_id");
+                            String carNumber = resultSet.getString("carnum");
+                            int customerId = resultSet.getInt("cuid");
+                            String parkDate = resultSet.getString("parkdate");
+                            String customerName = getCustomerNameById(customerId, connection); // 顧客名を取得
+                            Reservation reservation = new Reservation(reserv_id, carNumber, customerId, customerName, parkDate);
+                            reservations.add(reservation);
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // 適切なエラーハンドリングを行ってください
+            }
+            return reservations;
+        }
+        
+        public List<Reservation> searchByName(String cuname) {
+            List<Reservation> reservations = new ArrayList<>();
+            try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+                String query = "SELECT * FROM reservation WHERE carnum = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setString(1, cuname);
+
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            int reserv_id = resultSet.getInt("reserv_id");
+                            String carNumber = resultSet.getString("carnum");
+                            int customerId = resultSet.getInt("cuid");
+                            String parkDate = resultSet.getString("parkdate");
+                            String customerName = getCustomerNameById(customerId, connection); // 顧客名を取得
+                            Reservation reservation = new Reservation(reserv_id, carNumber, customerId, customerName, parkDate);
+                            reservations.add(reservation);
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // 適切なエラーハンドリングを行ってください
+            }
+            return reservations;
+        }
 
     }
 
