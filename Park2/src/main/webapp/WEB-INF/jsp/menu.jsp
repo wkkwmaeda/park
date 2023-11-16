@@ -25,7 +25,7 @@
             margin-bottom: 15px;
         }
         .button-container input[type="submit"] {
-            padding: 12px 25px;
+            padding: 20px 60px;
             margin: 8px 0;
             background-color: #3498db;
             color: white;
@@ -33,6 +33,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 28px;
         }
         .button-container input[type="submit"]:hover {
             background-color: #2980b9;
