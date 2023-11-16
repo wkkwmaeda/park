@@ -26,7 +26,7 @@ public class ParkingDAO {
 	}
 
 	// 新しい予約を作成するメソッド
-    public void createReservation(String tel, String carNumber, String checkInDate, String checkOutDate) {
+    public void createReservation(String cuname, String tel, String carNumber, String ci, String co) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
             // 既存の顧客が存在するか確認
             int customerId = getCustomerIdByTel(tel, connection);
@@ -34,19 +34,20 @@ public class ParkingDAO {
             if (customerId != -1) {
                 // 既存の顧客がいる場合
                 // 電話番号が一致する予約があるか確認
-                int existingReservationId = getReservationIdByTelAndParkDate(tel, checkInDate, connection);
+                int existingReservationId = getReservationIdByTelAndParkDate(tel, ci, connection);
 
                 if (existingReservationId != -1) {
                     // 電話番号が一致する予約がある場合、その予約を更新
-                    updateReservation(existingReservationId, carNumber, checkInDate, checkOutDate, connection);
+                    updateReservation(existingReservationId, carNumber, ci, co, connection);
                 } else {
                     // 電話番号が一致する予約がない場合、新しい予約を作成
-                    insertNewReservation(customerId, carNumber, checkInDate, checkOutDate, connection);
+                    insertNewReservation(customerId, carNumber, ci, co, connection);
                 }
             } else {
                 // 既存の顧客がいない場合、新しい顧客と予約を作成
-                int newCustomerId = insertNewCustomer();
-                insertNewReservation(newCustomerId, carNumber, checkInDate, checkOutDate, connection);
+            	String address = getAddressByTel(tel, connection);
+                int newCustomerId = insertNewCustomer(cuname, tel, ci, co, connection);
+                insertNewReservation(newCustomerId, carNumber, ci, co, connection);
             }
         } catch (SQLException e) {
             e.printStackTrace(); // 適切なエラーハンドリングを行ってください
@@ -98,13 +99,15 @@ public class ParkingDAO {
     }
 
     // 新しい顧客を作成し、その顧客IDを返すメソッド
-    private int insertNewCustomer(String cuname, String address, String tel, String ci, String co, Connection connection) throws SQLException {
-        String insertCustomerQuery = "INSERT INTO customer (cuname, address, tel, ci, co) VALUES (?, '', ?, ?, ?)";
+    private int insertNewCustomer(String cuname, String tel, String ci, String co, Connection connection) throws SQLException {
+        String insertCustomerQuery = "INSERT INTO customer (cuname, address, tel, ci, co) VALUES (?, ?, ?, ?, ?)";
+        String address = getAddressByTel(tel, connection); 
         try (PreparedStatement customerStatement = connection.prepareStatement(insertCustomerQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
             customerStatement.setString(1, cuname);
-            customerStatement.setString(2, tel);
-            customerStatement.setString(3, ci);
-            customerStatement.setString(4, co);
+            customerStatement.setString(2, address);
+            customerStatement.setString(3, tel);
+            customerStatement.setString(4, ci);
+            customerStatement.setString(5, co);
             customerStatement.executeUpdate();
 
             try (ResultSet generatedKeys = customerStatement.getGeneratedKeys()) {
@@ -247,6 +250,20 @@ public class ParkingDAO {
 		}
 		return reservations;
 	}
+	private String getAddressByTel(String tel, Connection connection) throws SQLException {
+        String address = "";
+        String query = "SELECT address FROM customer WHERE tel = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, tel);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    address = resultSet.getString("address");
+                }
+            }
+        }
+        return address;
+    }
 }
 
 
