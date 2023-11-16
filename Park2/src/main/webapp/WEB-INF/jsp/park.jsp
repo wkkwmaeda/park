@@ -48,11 +48,7 @@
     <form action="SearchByParkdateServlet" method="POST">
         Park Date: <input type="text" name="parkdate">
     </form> 
-<<<<<<< HEAD
-    <form action="SearchByNameServlet"" method="POST">
-=======
-    <form action="SearchByNameServlet" method="get">
->>>>>>> branch 'master' of https://github.com/wkkwmaeda/parking.git
+    <form action="SearchByNameServlet" method="POST">
         Customer Name: <input type="text" name="cuname">
     </form>
     
