@@ -33,22 +33,22 @@
     </script>
 </head>
 <body>
+<form action="ReservServlet" method="post">
     <!-- 顧客ID入力フォーム -->
-        顧客ID: <input type="text" name="customerID">
+    顧客ID: <input type="text" name="customerID"><br>
     
     <!-- 車両番号入力フォーム -->
-        車両番号: <input type="text" name="carNumber">
+    車両番号: <input type="text" name="carNumber"><br>
+        
+    <!-- 予約ボタンと戻るボタン -->
+    <input type="submit" name="button2" value="予約">
     
     <!-- カレンダー表示領域 -->
-        <div id="calendar"></div>
-    
-    <!-- 予約ボタンと戻るボタン -->
-    <form action="WEB-INF/jsp/Reservtion.jsp" method="post">
-        <input type="submit" name="button2" value="予約">
-    </form>
-    
-    <form action="Return" method="post">
-        <input type="submit" name="button2" value="メインメニューへ戻る">
-    </form>
+    <div id="calendar"></div><br>
+
+</form>
+<form action="Return" method="post">
+    <input type="submit" name="button2" value="メインメニューへ戻る">
+</form>
 </body>
 </html>
