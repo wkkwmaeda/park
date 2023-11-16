@@ -38,8 +38,8 @@
 </head>
 <body>
 <form id="reservationForm" action="ReservResultServlet" method="post">
-    <!-- 顧客ID入力フォーム -->
-    顧客ID: <input type="text" name="customerID"><br>
+    <!-- 電話番号入力フォーム -->
+    電話番号: <input type="text" name="tel"><br>
     
     <!-- 車両番号入力フォーム -->
     車両番号: <input type="text" name="carNumber"><br>
