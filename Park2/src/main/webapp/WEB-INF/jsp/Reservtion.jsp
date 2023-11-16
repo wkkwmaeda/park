@@ -12,43 +12,51 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            var startDate, endDate;
+    $(document).ready(function() {
+        var startDate, endDate;
+        var today = moment(); // 今日の日付
 
-            // カレンダーの初期化
-            $('#calendar').fullCalendar({
-                // カレンダーの設定
-                selectable: true, // 日付選択を有効にする
-                select: function(start, end, jsEvent, view) {
-                    // カレンダーが選択されたときの処理
-                    startDate = start;
-                    endDate = end;
-                    
-                    alert('チェックイン: ' + startDate.format('YYYY-MM-DD') + '\nチェックアウト: ' + endDate.format('YYYY-MM-DD'));
-                    
-                    // ここで選択された日付を使った追加の処理を実行することができます
-                }
-            });
+        // カレンダーの初期化
+        $('#calendar').fullCalendar({
+            selectable: true,
+            validRange: {
+                start: today.format('YYYY-MM-DD'), // 今日以降の日付から選択可能
+            },
+            select: function(start, end, jsEvent, view) {
+                startDate = start;
+                endDate = end;
+
+                // カレンダーが選択された日付を隠しフィールドに設定
+                $('#checkInDate').val(startDate.format('YYYY-MM-DD'));
+                $('#checkOutDate').val(endDate.format('YYYY-MM-DD'));
+
+                alert('チェックイン: ' + startDate.format('YYYY-MM-DD') + '\nチェックアウト: ' + endDate.format('YYYY-MM-DD'));
+            }
         });
+    });
     </script>
 </head>
 <body>
-<form action="ReservServlet" method="post">
-    <!-- 顧客ID入力フォーム -->
-    顧客ID: <input type="text" name="customerID"><br>
+<form id="reservationForm" action="ReservResultServlet" method="post">
+    <!-- 電話番号入力フォーム -->
+    電話番号: <input type="text" name="tel"><br>
     
     <!-- 車両番号入力フォーム -->
     車両番号: <input type="text" name="carNumber"><br>
-        
-    <!-- 予約ボタンと戻るボタン -->
-    <input type="submit" name="button2" value="予約">
     
     <!-- カレンダー表示領域 -->
     <div id="calendar"></div><br>
-
+    
+    <!-- チェックイン日とチェックアウト日を保持する隠しフィールド -->
+    <input type="hidden" id="checkInDate" name="checkInDate">
+    <input type="hidden" id="checkOutDate" name="checkOutDate">
+    
+    <!-- 予約ボタンと戻るボタン -->
+    <input type="submit" name="button2" value="予約">
 </form>
 <form action="Return" method="post">
     <input type="submit" name="button2" value="メインメニューへ戻る">
 </form>
+
 </body>
 </html>

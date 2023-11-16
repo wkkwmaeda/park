@@ -25,9 +25,109 @@ public class ParkingDAO {
 		}
 	}
 
-	// reservationテーブルから全情報を取得するメソッド
+	// 新しい予約を作成するメソッド
+    public void createReservation(String tel, String carNumber, String checkInDate, String checkOutDate) {
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+            // 既存の顧客が存在するか確認
+            int customerId = getCustomerIdByTel(tel, connection);
 
-	// ...（他の既存のコードはそのまま）
+            if (customerId != -1) {
+                // 既存の顧客がいる場合
+                // 電話番号が一致する予約があるか確認
+                int existingReservationId = getReservationIdByTelAndParkDate(tel, checkInDate, connection);
+
+                if (existingReservationId != -1) {
+                    // 電話番号が一致する予約がある場合、その予約を更新
+                    updateReservation(existingReservationId, carNumber, checkInDate, checkOutDate, connection);
+                } else {
+                    // 電話番号が一致する予約がない場合、新しい予約を作成
+                    insertNewReservation(customerId, carNumber, checkInDate, checkOutDate, connection);
+                }
+            } else {
+                // 既存の顧客がいない場合、新しい顧客と予約を作成
+                int newCustomerId = insertNewCustomer(tel, connection);
+                insertNewReservation(newCustomerId, carNumber, checkInDate, checkOutDate, connection);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // 適切なエラーハンドリングを行ってください
+        }
+    }
+
+    // 電話番号に対応する顧客IDを取得するメソッド
+    private int getCustomerIdByTel(String tel, Connection connection) throws SQLException {
+        int customerId = -1;
+        String query = "SELECT cuid FROM customer WHERE tel = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, tel);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    customerId = resultSet.getInt("cuid");
+                }
+            }
+        }
+        return customerId;
+    }
+
+    // 電話番号とチェックイン日に対応する予約IDを取得するメソッド
+    private int getReservationIdByTelAndParkDate(String tel, String parkDate, Connection connection) throws SQLException {
+        int reservationId = -1;
+        String query = "SELECT reserv_id FROM reservation WHERE cuid = (SELECT cuid FROM customer WHERE tel = ?) AND parkdate = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, tel);
+            preparedStatement.setString(2, parkDate);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    reservationId = resultSet.getInt("reserv_id");
+                }
+            }
+        }
+        return reservationId;
+    }
+
+    // 予約を更新するメソッド
+    private void updateReservation(int reservationId, String carNumber, String checkInDate, String checkOutDate, Connection connection) throws SQLException {
+        String query = "UPDATE reservation SET carnum = ?, parkdate = ? WHERE reserv_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, carNumber);
+            preparedStatement.setString(2, checkInDate);
+            preparedStatement.setInt(3, reservationId);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    // 新しい顧客を作成し、その顧客IDを返すメソッド
+    private int insertNewCustomer(String tel, Connection connection) throws SQLException {
+        String insertCustomerQuery = "INSERT INTO customer (cuname, address, tel, ci, co) VALUES (?, '', ?, ?, ?)";
+        try (PreparedStatement customerStatement = connection.prepareStatement(insertCustomerQuery,
+                PreparedStatement.RETURN_GENERATED_KEYS)) {
+            customerStatement.setString(1, "新しい顧客"); // 適切な顧客名を設定してください
+            customerStatement.setString(2, tel);
+            customerStatement.setString(3, checkInDate);
+            customerStatement.setString(4, checkOutDate);
+            customerStatement.executeUpdate();
+
+            try (ResultSet generatedKeys = customerStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating customer failed, no ID obtained.");
+                }
+            }
+        }
+    }
+
+    // 新しい予約を作成するメソッド
+    private void insertNewReservation(int customerId, String carNumber, String checkInDate, String checkOutDate, Connection connection) throws SQLException {
+        String insertReservationQuery = "INSERT INTO reservation (carnum, cuid, parkdate) VALUES (?, ?, ?)";
+        try (PreparedStatement reservationStatement = connection.prepareStatement(insertReservationQuery)) {
+            reservationStatement.setString(1, carNumber);
+            reservationStatement.setInt(2, customerId);
+            reservationStatement.setString(3, checkInDate);
+            reservationStatement.executeUpdate();
+        }
+    }
 
 	public List<Reservation> getAllReservations() {
 		List<Reservation> reservations = new ArrayList<>();
