@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>異世界転生が完了しました。</h1>
-
+	<p>名前: ${sessionScope.name}</p>
     <p>電話番号: ${sessionScope.tel}</p>
     <p>車両番号: ${sessionScope.carNumber}</p>
     <p>チェックイン日: ${sessionScope.checkInDate}</p>

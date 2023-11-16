@@ -15,12 +15,14 @@ public class ReservResultServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Retrieve form data
+    	String name = request.getParameter("name");
         String tel = request.getParameter("tel");
         String carNumber = request.getParameter("carNumber");
         String checkInDate = request.getParameter("checkInDate");
         String checkOutDate = request.getParameter("checkOutDate");
 
         // Save data in session
+        request.getSession().setAttribute("name", name);
         request.getSession().setAttribute("tel", tel);
         request.getSession().setAttribute("carNumber", carNumber);
         request.getSession().setAttribute("checkInDate", checkInDate);
