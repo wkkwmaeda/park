@@ -12,5 +12,9 @@
     <p>車両番号: ${sessionScope.carNumber}</p>
     <p>チェックイン日: ${sessionScope.checkInDate}</p>
     <p>チェックアウト日: ${sessionScope.checkOutDate}</p>
+    
+    <form action="Return" method="post">
+    	<input type="submit" name="button2" value="メインメニューへ戻る">
+	</form>
 </body>
 </html>
