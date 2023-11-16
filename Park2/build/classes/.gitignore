@@ -1,6 +1,3 @@
-/servlet/
 /dao/
-<<<<<<< HEAD
-=======
 /model/
->>>>>>> branch 'master' of https://github.com/wkkwmaeda/parking.git
+/servlet/
