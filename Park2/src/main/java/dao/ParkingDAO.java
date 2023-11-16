@@ -45,7 +45,7 @@ public class ParkingDAO {
                 }
             } else {
                 // 既存の顧客がいない場合、新しい顧客と予約を作成
-                int newCustomerId = insertNewCustomer(tel, connection);
+                int newCustomerId = insertNewCustomer();
                 insertNewReservation(newCustomerId, carNumber, checkInDate, checkOutDate, connection);
             }
         } catch (SQLException e) {
@@ -98,13 +98,10 @@ public class ParkingDAO {
     }
 
     // 新しい顧客を作成し、その顧客IDを返すメソッド
-    private int insertNewCustomer(String tel, Connection connection) throws SQLException {
+    private int insertNewCustomer(String cuname, String address, String tel, String ci, String co, Connection connection) throws SQLException {
         String insertCustomerQuery = "INSERT INTO customer (cuname, address, tel, ci, co) VALUES (?, '', ?, ?, ?)";
-        try (PreparedStatement customerStatement = connection.prepareStatement(insertCustomerQuery,
-                PreparedStatement.RETURN_GENERATED_KEYS)) {
-        	Reservation reservation = new Reservation(cuname, address, tel, ci, co);
-
-            customerStatement.setString(1, cuid); // 適切な顧客名を設定してください
+        try (PreparedStatement customerStatement = connection.prepareStatement(insertCustomerQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            customerStatement.setString(1, cuname);
             customerStatement.setString(2, tel);
             customerStatement.setString(3, ci);
             customerStatement.setString(4, co);
@@ -119,6 +116,7 @@ public class ParkingDAO {
             }
         }
     }
+
 
     // 新しい予約を作成するメソッド
     private void insertNewReservation(int customerId, String carNumber, String checkInDate, String checkOutDate, Connection connection) throws SQLException {
