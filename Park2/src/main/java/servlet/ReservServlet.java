@@ -17,5 +17,4 @@ public class ReservServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/Reservtion.jsp");
 		dispatcher.forward(request, response);
 	}
-
 }

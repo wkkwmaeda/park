@@ -13,26 +13,42 @@
 
     <script>
         $(document).ready(function() {
+            var startDate, endDate;
+
             // カレンダーの初期化
             $('#calendar').fullCalendar({
                 // カレンダーの設定
-                // ここに任意の設定を追加できます
+                selectable: true, // 日付選択を有効にする
+                select: function(start, end, jsEvent, view) {
+                    // カレンダーが選択されたときの処理
+                    startDate = start;
+                    endDate = end;
+                    
+                    alert('チェックイン: ' + startDate.format('YYYY-MM-DD') + '\nチェックアウト: ' + endDate.format('YYYY-MM-DD'));
+                    
+                    // ここで選択された日付を使った追加の処理を実行することができます
+                }
             });
         });
     </script>
 </head>
 <body>
-    <!-- 車両番号検索フォーム -->
-    <form action="SearchByCarNumServlet" method="POST">
-        Car Number: <input type="text" name="carnum">
-    </form>
-
-    <!-- 駐車日付検索フォーム -->
-    <form action="SearchByParkdateServlet" method="POST">
-        Park Date: <input type="text" name="parkdate">
-    </form>
-
+    <!-- 顧客ID入力フォーム -->
+        顧客ID: <input type="text" name="customerID">
+    
+    <!-- 車両番号入力フォーム -->
+        車両番号: <input type="text" name="carNumber">
+    
     <!-- カレンダー表示領域 -->
-    <div id="calendar"></div>
+        <div id="calendar"></div>
+    
+    <!-- 予約ボタンと戻るボタン -->
+    <form action="WEB-INF/jsp/Reservtion.jsp" method="post">
+        <input type="submit" name="button2" value="予約">
+    </form>
+    
+    <form action="Return" method="post">
+        <input type="submit" name="button2" value="メインメニューへ戻る">
+    </form>
 </body>
 </html>

@@ -137,9 +137,7 @@ public class ParkingDAO {
 						String carNumber = resultSet.getString("carnum");
 						int customerId = resultSet.getInt("cuid");
 						String parkDate = resultSet.getString("parkdate");
-						String customerName = getCustomerNameById(customerId, connection); // ŒÚ‹q–¼‚ðŽæ“¾
-						customerName = resultSet.getString("cuname");
-						Reservation reservation = new Reservation(reserv_id,carNumber,customerId,parkDate,customerName);
+						Reservation reservation = new Reservation(reserv_id,carNumber,customerId,parkDate,cuname);
 						reservations.add(reservation);
 					}
 				}
