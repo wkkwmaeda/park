@@ -102,10 +102,10 @@ public class ParkingDAO {
         String insertCustomerQuery = "INSERT INTO customer (cuname, address, tel, ci, co) VALUES (?, '', ?, ?, ?)";
         try (PreparedStatement customerStatement = connection.prepareStatement(insertCustomerQuery,
                 PreparedStatement.RETURN_GENERATED_KEYS)) {
-            customerStatement.setString(1, "V‚µ‚¢ŒÚ‹q"); // “KØ‚ÈŒÚ‹q–¼‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢
+            customerStatement.setString(1, cuid); // “KØ‚ÈŒÚ‹q–¼‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢
             customerStatement.setString(2, tel);
-            customerStatement.setString(3, checkInDate);
-            customerStatement.setString(4, checkOutDate);
+            customerStatement.setString(3, ci);
+            customerStatement.setString(4, co);
             customerStatement.executeUpdate();
 
             try (ResultSet generatedKeys = customerStatement.getGeneratedKeys()) {
