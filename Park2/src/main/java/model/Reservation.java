@@ -6,8 +6,18 @@ public class Reservation {
     private int cuid;
     private String parkdate;
     private String cuname; 
+    private String ci;
+    private String co;
+    private String address;
+    private String tel;
 
-    
+    public Reservation(String cuname, String address, String tel, String ci, String co) {
+        this.cuname = cuname;
+        this.address = address;
+        this.tel = tel;
+        this.ci = ci;
+        this.co = co;
+    }
 
     public Reservation(int reserv_id, String carnum, int cuid, String cuname, String parkdate) {
         this.reserv_id = reserv_id;
@@ -15,6 +25,7 @@ public class Reservation {
         this.cuid = cuid;
         this.cuname = cuname;
         this.parkdate = parkdate;
+        
     }
 
     public int getReserv_id() {
@@ -57,6 +68,27 @@ public class Reservation {
     // customerNameのsetter（設定用メソッド）
     public void setCuname(String cuname) {
         this.cuname = cuname;
+    }
+    
+
+    // ciのセッター
+    public void setCi(String ci) {
+        this.ci = ci;
+    }
+
+    // ciのゲッター
+    public String getCi() {
+        return ci;
+    }
+
+    // coのセッター
+    public void setCo(String co) {
+        this.co = co;
+    }
+
+    // coのゲッター
+    public String getCo() {
+        return co;
     }
 }
 
