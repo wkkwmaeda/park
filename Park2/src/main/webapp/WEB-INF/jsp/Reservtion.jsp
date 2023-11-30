@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">;
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>予約フォーム</title>
 
     <!-- カレンダー表示のために追加 -->
@@ -39,7 +39,7 @@
 <body>
 <form id="reservationForm" action="ReservResultServlet" method="post">
     <!-- 名前入力フォーム -->
-    名前: <input type="text" name="cuname" required><br>
+    名　　　前: <input type="text" name="cuname" required><br>
 
     <!-- 電話番号入力フォーム -->
     電話番号: <input type="tel" name="tel" required><br>

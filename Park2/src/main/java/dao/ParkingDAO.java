@@ -34,7 +34,7 @@ public class ParkingDAO {
             if (customerId != -1) {
                 // 既存の顧客がいる場合
                 // 電話番号が一致する予約があるか確認
-                int existingReservationId = getReservationIdByTelAndParkDate(tel, ci, connection);
+                int existingReservationId = getReservationIdByTelAndParkDate(tel, connection);
 
                 if (existingReservationId != -1) {
                     // 電話番号が一致する予約がある場合、その予約を更新
@@ -70,12 +70,11 @@ public class ParkingDAO {
     }
 
     // 電話番号とチェックイン日に対応する予約IDを取得するメソッド
-    private int getReservationIdByTelAndParkDate(String tel, String pi, Connection connection) throws SQLException {
+    private int getReservationIdByTelAndParkDate(String tel, Connection connection) throws SQLException {
         int reservationId = -1;
-        String query = "SELECT reserv_id FROM reservation WHERE cuid = (SELECT cuid FROM customer WHERE tel = ?) AND pi = ?";
+        String query = "SELECT reserv_id FROM reservation WHERE cuid = (SELECT cuid FROM customer WHERE tel = ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, tel);
-            preparedStatement.setString(2, pi);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
