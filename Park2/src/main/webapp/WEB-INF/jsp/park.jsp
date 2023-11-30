@@ -45,15 +45,18 @@
     <!-- 検索フォーム -->
     <form action="SearchByCarNumServlet" method="POST">
         Car Number: <input type="text" name="carnum">
+        <input type="submit" value="Search">
     </form>
     <form action="SearchByParkdateServlet" method="POST">
         Park Date: <input type="text" name="parkdate">
+        <input type="submit" value="Search">
     </form> 
     <form action="SearchByNameServlet" method="POST">
         Customer Name: <input type="text" name="cuname">
+        <input type="submit" value="Search">
     </form>
     
-    <input type="submit" value="Search">
+    
 
     <table>
         <!-- 表ヘッダ -->
