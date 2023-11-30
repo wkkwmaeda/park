@@ -13,7 +13,7 @@
 
     <script>
         $(document).ready(function() {
-            var startDate, endDate;
+            var pi, po;
             var today = moment(); // 今日の日付
 
             // カレンダーの初期化
@@ -23,14 +23,14 @@
                     start: today.format('YYYY-MM-DD'), // 今日以降の日付から選択可能
                 },
                 select: function(start, end, jsEvent, view) {
-                    startDate = start;
-                    endDate = end;
+                    pi = start;
+                    po = end;
 
                     // カレンダーが選択された日付を隠しフィールドに設定
-                    $('#checkInDate').val(startDate.format('YYYY-MM-DD'));
-                    $('#checkOutDate').val(endDate.format('YYYY-MM-DD'));
+                    $('#pi').val(pi.format('YYYY-MM-DD'));
+                    $('#po').val(po.format('YYYY-MM-DD'));
 
-                    alert('チェックイン: ' + startDate.format('YYYY-MM-DD') + '\nチェックアウト: ' + endDate.format('YYYY-MM-DD'));
+                    alert('チェックイン: ' + pi.format('YYYY-MM-DD') + '\nチェックアウト: ' + pi.format('YYYY-MM-DD'));
                 }
             });
         });
@@ -51,8 +51,8 @@
     <div id="calendar"></div><br>
     
     <!-- チェックイン日とチェックアウト日を保持する隠しフィールド -->
-    <input type="hidden" id="checkInDate" name="checkInDate">
-    <input type="hidden" id="checkOutDate" name="checkOutDate">
+    <input type="hidden" id="pi" name="pi">
+    <input type="hidden" id="po" name="po">
     
     <!-- 予約ボタンと戻るボタン -->
     <input type="submit" name="button2" value="予約">

@@ -10,8 +10,8 @@
 	<p>名前: ${sessionScope.cuname}</p>
     <p>電話番号: ${sessionScope.tel}</p>
     <p>車両番号: ${sessionScope.carNumber}</p>
-    <p>チェックイン日: ${sessionScope.checkInDate}</p>
-    <p>チェックアウト日: ${sessionScope.checkOutDate}</p>
+    <p>駐車場チェックイン日: ${sessionScope.pi}</p>
+    <p>駐車場チェックアウト日: ${sessionScope.po}</p>
     
     <form action="Return" method="post">
     	<input type="submit" name="button2" value="メインメニューへ戻る">

@@ -20,22 +20,22 @@ public class ReservResultServlet extends HttpServlet {
         String cuname = request.getParameter("cuname");
         String tel = request.getParameter("tel");
         String carNumber = request.getParameter("carNumber");
-        String checkInDate = request.getParameter("checkInDate");
-        String checkOutDate = request.getParameter("checkOutDate");
+        String pi = request.getParameter("pi");
+        String po = request.getParameter("po");
 
         // Save data in session
         request.getSession().setAttribute("cuname", cuname);
         request.getSession().setAttribute("tel", tel);
         request.getSession().setAttribute("carNumber", carNumber);
-        request.getSession().setAttribute("checkInDate", checkInDate);
-        request.getSession().setAttribute("checkOutDate", checkOutDate);
+        request.getSession().setAttribute("pi", pi);
+        request.getSession().setAttribute("po", po);
 
         // Create ParkingDAO instance
         ParkingDAO parkingDAO = new ParkingDAO();
 
         try {
             // Attempt to create reservation
-            parkingDAO.createReservation(cuname, tel, carNumber, checkInDate, checkOutDate);
+            parkingDAO.createReservation(cuname, tel, carNumber, pi, po);
 
             // Forward to ReserctionResult.jsp on success
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/ReservtionResult.jsp");

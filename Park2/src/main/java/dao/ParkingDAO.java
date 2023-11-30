@@ -45,7 +45,6 @@ public class ParkingDAO {
                 }
             } else {
                 // 既存の顧客がいない場合、新しい顧客と予約を作成
-            	String address = getAddressByTel(tel, connection);
                 int newCustomerId = insertNewCustomer(cuname, tel, ci, co, connection);
                 insertNewReservation(newCustomerId, carNumber, ci, co, connection);
             }
@@ -100,14 +99,12 @@ public class ParkingDAO {
 
     // 新しい顧客を作成し、その顧客IDを返すメソッド
     private int insertNewCustomer(String cuname, String tel, String ci, String co, Connection connection) throws SQLException {
-        String insertCustomerQuery = "INSERT INTO customer (cuname, address, tel, ci, co) VALUES (?, ?, ?, ?, ?)";
-        String address = getAddressByTel(tel, connection); 
+        String insertCustomerQuery = "INSERT INTO customer (cuname, tel, ci, co) VALUES (?, ?, ?, ?)";
         try (PreparedStatement customerStatement = connection.prepareStatement(insertCustomerQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
             customerStatement.setString(1, cuname);
-            customerStatement.setString(2, address);
-            customerStatement.setString(3, tel);
-            customerStatement.setString(4, ci);
-            customerStatement.setString(5, co);
+            customerStatement.setString(2, tel);
+            customerStatement.setString(3, ci);
+            customerStatement.setString(4, co);
             customerStatement.executeUpdate();
 
             try (ResultSet generatedKeys = customerStatement.getGeneratedKeys()) {
@@ -122,12 +119,13 @@ public class ParkingDAO {
 
 
     // 新しい予約を作成するメソッド
-    private void insertNewReservation(int customerId, String carNumber, String checkInDate, String checkOutDate, Connection connection) throws SQLException {
-        String insertReservationQuery = "INSERT INTO reservation (carnum, cuid, parkdate) VALUES (?, ?, ?)";
+    private void insertNewReservation(int customerId, String carNumber, String pi, String po, Connection connection) throws SQLException {
+        String insertReservationQuery = "INSERT INTO reservation (carnum, cuid, pi, po) VALUES (?, ?, ?, ?)";
         try (PreparedStatement reservationStatement = connection.prepareStatement(insertReservationQuery)) {
             reservationStatement.setString(1, carNumber);
             reservationStatement.setInt(2, customerId);
-            reservationStatement.setString(3, checkInDate);
+            reservationStatement.setString(3, pi);
+            reservationStatement.setString(4, po);
             reservationStatement.executeUpdate();
         }
     }
