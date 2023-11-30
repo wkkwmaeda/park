@@ -17,7 +17,8 @@ import model.Reservation;
 public class SearchByNameServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String cuname = request.getParameter("cuname");
+		request.setCharacterEncoding("UTF-8");
+    	String cuname = request.getParameter("cuname");
 
         ParkingDAO dao = new ParkingDAO();
         List<Reservation> searchResults = dao.searchByName(cuname);

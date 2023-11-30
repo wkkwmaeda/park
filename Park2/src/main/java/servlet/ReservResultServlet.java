@@ -16,6 +16,8 @@ public class ReservResultServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+
         // Retrieve form data
         String cuname = request.getParameter("cuname");
         String tel = request.getParameter("tel");

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">;
     <title>予約フォーム</title>
 
     <!-- カレンダー表示のために追加 -->
@@ -30,7 +30,7 @@
                     $('#pi').val(pi.format('YYYY-MM-DD'));
                     $('#po').val(po.format('YYYY-MM-DD'));
 
-                    alert('チェックイン: ' + pi.format('YYYY-MM-DD') + '\nチェックアウト: ' + pi.format('YYYY-MM-DD'));
+                    alert('チェックイン: ' + pi.format('YYYY-MM-DD') + '\nチェックアウト: ' + po.format('YYYY-MM-DD'));
                 }
             });
         });

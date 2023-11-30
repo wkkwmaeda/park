@@ -39,6 +39,7 @@
     </style>
 </head>
 <body>
+
     <h1>Parking Reservations</h1>
 
     <!-- 検索フォーム -->
