@@ -70,12 +70,12 @@ public class ParkingDAO {
     }
 
     // 電話番号とチェックイン日に対応する予約IDを取得するメソッド
-    private int getReservationIdByTelAndParkDate(String tel, String parkDate, Connection connection) throws SQLException {
+    private int getReservationIdByTelAndParkDate(String tel, String pi, Connection connection) throws SQLException {
         int reservationId = -1;
-        String query = "SELECT reserv_id FROM reservation WHERE cuid = (SELECT cuid FROM customer WHERE tel = ?) AND parkdate = ?";
+        String query = "SELECT reserv_id FROM reservation WHERE cuid = (SELECT cuid FROM customer WHERE tel = ?) AND pi = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, tel);
-            preparedStatement.setString(2, parkDate);
+            preparedStatement.setString(2, pi);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -88,7 +88,7 @@ public class ParkingDAO {
 
     // 予約を更新するメソッド
     private void updateReservation(int reservationId, String carNumber, String checkInDate, String checkOutDate, Connection connection) throws SQLException {
-        String query = "UPDATE reservation SET carnum = ?, parkdate = ? WHERE reserv_id = ?";
+        String query = "UPDATE reservation SET carnum = ?, pi = ? WHERE reserv_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, carNumber);
             preparedStatement.setString(2, checkInDate);
@@ -142,12 +142,12 @@ public class ParkingDAO {
 				int reserv_id = resultSet.getInt("reserv_id");
 				String carnum = resultSet.getString("carnum");
 				int cuid = resultSet.getInt("cuid");
-				String parkdate = resultSet.getString("parkdate");
+				String pi = resultSet.getString("pi");
 
 				String cuname = getCustomerNameById(cuid, connection); // 顧客名を取得
 
 				// 予約オブジェクトを生成し、顧客名を設定
-				Reservation reservation = new Reservation(reserv_id, carnum, cuid, cuname, parkdate);
+				Reservation reservation = new Reservation(reserv_id, carnum, cuid, cuname, pi);
 				reservations.add(reservation);
 			}
 		} catch (SQLException e) {
@@ -187,9 +187,9 @@ public class ParkingDAO {
 						int reserv_id = resultSet.getInt("reserv_id");
 						String carNumber = resultSet.getString("carnum");
 						int customerId = resultSet.getInt("cuid");
-						String parkDate = resultSet.getString("parkdate");
+						String pi = resultSet.getString("pi");
 						String customerName = getCustomerNameById(customerId, connection); // 顧客名を取得
-						Reservation reservation = new Reservation(reserv_id, carNumber, customerId, customerName, parkDate);
+						Reservation reservation = new Reservation(reserv_id, carNumber, customerId, customerName, pi);
 						reservations.add(reservation);
 					}
 				}
@@ -203,7 +203,7 @@ public class ParkingDAO {
 	public List<Reservation> searchByParkdate(String parkdate) {
 		List<Reservation> reservations = new ArrayList<>();
 		try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String query = "SELECT * FROM reservation WHERE parkdate = ?";
+			String query = "SELECT * FROM reservation WHERE pi = ?";
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 				preparedStatement.setString(1, parkdate);
 
@@ -212,9 +212,9 @@ public class ParkingDAO {
 						int reserv_id = resultSet.getInt("reserv_id");
 						String carNumber = resultSet.getString("carnum");
 						int customerId = resultSet.getInt("cuid");
-						String parkDate = resultSet.getString("parkdate");
+						String pi = resultSet.getString("pi");
 						String customerName = getCustomerNameById(customerId, connection); // 顧客名を取得
-						Reservation reservation = new Reservation(reserv_id, carNumber, customerId, customerName, parkDate);
+						Reservation reservation = new Reservation(reserv_id, carNumber, customerId, customerName, pi);
 						reservations.add(reservation);
 					}
 				}
@@ -237,8 +237,8 @@ public class ParkingDAO {
 						int reserv_id = resultSet.getInt("reserv_id");
 						String carNumber = resultSet.getString("carnum");
 						int customerId = resultSet.getInt("cuid");
-						String parkDate = resultSet.getString("parkdate");
-						Reservation reservation = new Reservation(reserv_id,carNumber,customerId,parkDate,cuname);
+						String pi = resultSet.getString("pi");
+						Reservation reservation = new Reservation(reserv_id,carNumber,customerId,pi,cuname);
 						reservations.add(reservation);
 					}
 				}
