@@ -45,7 +45,7 @@
     電話番号: <input type="tel" name="tel" required><br>
     
     <!-- 車両番号入力フォーム -->
-    車両番号: <input type="text" name="carNumber" required><br>
+    車両番号: <input type="text" name="carNumber" required maxlength="4"><br>
     
     <!-- カレンダー表示領域 -->
     <div id="calendar"></div><br>
