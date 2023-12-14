@@ -11,7 +11,7 @@ import java.util.List;
 import model.Reservation;
 
 public class ParkingDAO {
-	// ... (既存のコード)
+
 	private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
 	private static final String JDBC_URL = "jdbc:mysql://localhost:65534/parking?useSSL=false&characterEncoding=UTF-8&serverTimezone=JST";
 	private static final String DB_USER = "root";
@@ -261,7 +261,30 @@ public class ParkingDAO {
         }
         return address;
     }
+	
+	public void deleteReservation(int reservationId) {
+	    try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+	        String query = "DELETE FROM reservation WHERE reserv_id = ?";
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	            preparedStatement.setInt(1, reservationId);
+
+	            // DELETE文にはexecuteUpdate()を使用
+	            int rowsAffected = preparedStatement.executeUpdate();
+
+	            // 削除が成功したかどうかを確認
+	            if (rowsAffected > 0) {
+	                System.out.println("予約が正常に削除されました。");
+	            } else {
+	                System.out.println("IDが" + reservationId + "の予約は見つかりませんでした。");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // アプリケーション内で適切に例外を処理してください
+	    }
+	}
 }
+
+
 
 
 
