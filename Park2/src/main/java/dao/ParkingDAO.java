@@ -247,7 +247,6 @@ public class ParkingDAO {
 		}
 		return reservations;
 	}
-	
 	private String getAddressByTel(String tel, Connection connection) throws SQLException {
         String address = "";
         String query = "SELECT address FROM customer WHERE tel = ?";
@@ -339,56 +338,6 @@ public class ParkingDAO {
             preparedStatement.executeUpdate();
         }
     }
-    public List<Reservation> searchByMultipleConditions(String carnum, String name, String parkdate) {
-        List<Reservation> reservations = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-            StringBuilder queryBuilder = new StringBuilder("SELECT * FROM reservation WHERE 1=1");
-
-            if (carnum != null && !carnum.isEmpty()) {
-                queryBuilder.append(" AND carnum = ?");
-            }
-
-            if (name != null && !name.isEmpty()) {
-                queryBuilder.append(" AND cuid IN (SELECT cuid FROM customer WHERE cuname = ?)");
-            }
-
-            if (parkdate != null && !parkdate.isEmpty()) {
-                queryBuilder.append(" AND pi = ?");
-            }
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(queryBuilder.toString())) {
-                int parameterIndex = 1;
-
-                if (carnum != null && !carnum.isEmpty()) {
-                    preparedStatement.setString(parameterIndex++, carnum);
-                }
-
-                if (name != null && !name.isEmpty()) {
-                    preparedStatement.setString(parameterIndex++, name);
-                }
-
-                if (parkdate != null && !parkdate.isEmpty()) {
-                    preparedStatement.setString(parameterIndex, parkdate);
-                }
-
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        int reserv_id = resultSet.getInt("reserv_id");
-                        String carNumber = resultSet.getString("carnum");
-                        int customerId = resultSet.getInt("cuid");
-                        String pi = resultSet.getString("pi");
-                        String customerName = getCustomerNameById(customerId, connection);
-                        Reservation reservation = new Reservation(reserv_id, carNumber, customerId, customerName, pi);
-                        reservations.add(reservation);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // 適切なエラーハンドリングを行ってください
-        }
-        return reservations;
-    }
-
 }
 
 
