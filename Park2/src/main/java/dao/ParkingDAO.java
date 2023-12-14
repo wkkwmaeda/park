@@ -282,6 +282,62 @@ public class ParkingDAO {
 	        e.printStackTrace(); // アプリケーション内で適切に例外を処理してください
 	    }
 	}
+	
+	public void editReservation(int reservationId, String carNumber, String parkDate) {
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+            String query = "UPDATE reservation SET carnum = ?, pi = ? WHERE reserv_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, carNumber);
+                preparedStatement.setString(2, parkDate);
+                preparedStatement.setInt(3, reservationId);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("予約が正常に更新されました。");
+                } else {
+                    System.out.println("IDが" + reservationId + "の予約は見つかりませんでした。");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // 適切なエラーハンドリングを行ってください
+        }
+    }
+
+    // 予約IDに基づいて予約情報を取得するメソッド
+    private Reservation getReservationById(int reservationId, Connection connection) throws SQLException {
+        Reservation reservation = null;
+        String query = "SELECT * FROM reservation WHERE reserv_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, reservationId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int customerId = resultSet.getInt("cuid");
+                    String carNumber = resultSet.getString("carnum");
+                    String parkDate = resultSet.getString("pi");
+
+                    // 顧客名を取得
+                    String customerName = getCustomerNameById(customerId, connection);
+
+                    // 予約オブジェクトを生成
+                    reservation = new Reservation(reservationId, carNumber, customerId, customerName, parkDate);
+                }
+            }
+        }
+        return reservation;
+    }
+
+    // 予約情報を更新するメソッド
+    private void updateReservation(Reservation reservation, Connection connection) throws SQLException {
+        String query = "UPDATE reservation SET carnum = ?, pi = ? WHERE reserv_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, reservation.getCarnum());
+            preparedStatement.setString(2, reservation.getParkdate());
+            preparedStatement.setInt(3, reservation.getReserv_id());
+            preparedStatement.executeUpdate();
+        }
+    }
 }
 
 

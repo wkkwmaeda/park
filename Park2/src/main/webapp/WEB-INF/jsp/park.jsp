@@ -76,27 +76,31 @@ tr:nth-child(even) {
 		</tr>
 
 		<!-- 検索結果表示 -->
-		<c:forEach var="reservation" items="${reservations}">
-			<tr>
-				<td>${reservation.reserv_id}</td>
-				<td>${reservation.carnum}</td>
-				<td>${reservation.cuid}</td>
-				<td>${reservation.getCuname()}</td>
-				<td>${reservation.parkdate}</td>
-				<td>
-					<form action="DeleteReservationServlet" method="post">
+<c:forEach var="reservation" items="${reservations}">
+    <tr>
+        <td>${reservation.reserv_id}</td>
+        <td>${reservation.carnum}</td>
+        <td>${reservation.cuid}</td>
+        <td>${reservation.getCuname()}</td>
+        <td>${reservation.parkdate}</td>
+        <td>
+            <!-- 削除フォーム -->
+            <form action="DeleteReservationServlet" method="post">
+                <input type="hidden" name="reservationId" value="${reservation.reserv_id}">
+                <input type="submit" name="button1" value="削除">
+            </form>
+        </td>
+        <td>
+            <!-- 更新フォーム -->
+<form action="EditformServlet" method="post">
     <input type="hidden" name="reservationId" value="${reservation.reserv_id}">
-    <input type="submit" name="button1" value="削除">
+    <input type="submit" name="button1" value="更新">
 </form>
 
-				</td>
-				<td>
-					<form action="Return" method="post">
-						<input type="submit" name="button1" value="更新">
-					</form>
-				</td>
-			</tr>
-		</c:forEach>
+        </td>
+    </tr>
+</c:forEach>
+
 
 	</table>
 	<form action="Return" method="post">

@@ -13,7 +13,7 @@ import dao.ParkingDAO;
 import model.Reservation;
 
 @WebServlet("/ParkingStatusServlet")
-public class ParkingStatusServlet extends HttpServlet {
+public class EditReservationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ParkingDAO parkingDAO = new ParkingDAO();
         List<Reservation> reservations = parkingDAO.getAllReservations();
