@@ -90,14 +90,6 @@ tr:nth-child(even) {
                 <input type="submit" name="button1" value="削除">
             </form>
         </td>
-        <td>
-            <!-- 更新フォーム -->
-<form action="EditformServlet" method="post">
-    <input type="hidden" name="reservationId" value="${reservation.reserv_id}">
-    <input type="submit" name="button1" value="更新">
-</form>
-
-        </td>
     </tr>
 </c:forEach>
 
