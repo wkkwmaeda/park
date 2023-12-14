@@ -6,7 +6,7 @@
     <title>予約確認画面</title>
 </head>
 <body>
-    <h1>予約が完了しました。</h1>
+    <h1>畠山翔授業中に太鼓の達人やらないで</h1>
 	<p>名前: ${sessionScope.cuname}</p>
     <p>電話番号: ${sessionScope.tel}</p>
     <p>車両番号: ${sessionScope.carNumber}</p>
