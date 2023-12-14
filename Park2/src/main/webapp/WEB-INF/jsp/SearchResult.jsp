@@ -85,4 +85,8 @@
                 <td>${reservation.parkdate}</td>
                 <!-- 他のフィールドの情報表示（必要に応じて追加） -->
             </tr>
-        </c:
+        </c:forEach>
+     </table>
+     <form action="ParkingStatusServlet" method="post">
+         <input type="submit" name="button1" value="戻る">
+    </form>
