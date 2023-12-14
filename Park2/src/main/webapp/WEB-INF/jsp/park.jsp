@@ -83,7 +83,6 @@
             	<td>        
                 	<form action="Return" method="post"><input type="submit" name="button1" value="更新"></form>
             	</td>
-                <!-- 他のフィールドの情報表示（必要に応じて追加） -->
             </tr>
         </c:forEach>
       
